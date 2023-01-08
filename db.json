@@ -2,10 +2,10 @@
   "books": [
     {
       "id": 1,
-      "name": "Yaban",
+      "name": "Yaban edit",
       "author": "Yakup Kadri Karaosmanoğlu",
-      "isbn": "11111111111",
-      "categoryId": "1"
+      "categoryId": "1",
+      "isbn": "11111111111"
     },
     {
       "id": 2,

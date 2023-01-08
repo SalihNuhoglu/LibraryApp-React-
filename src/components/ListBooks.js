@@ -20,7 +20,7 @@ const ListBooks = (props) => {
                     .then(resCat => {
                         setTimeout(() => {
                             setCategories(resCat.data);
-                        }, 1000);
+                        });
 
                     })
                     .catch((err) => console.log("categories err", err));
@@ -80,6 +80,7 @@ const ListBooks = (props) => {
                                                 onClick={() => deleteBook(book.id)}>
                                                 Delete
                                             </button>
+                                            <Link to={`edit-book/${book.id}`} className="btn btn-sm btn-outline-secondary">Edit</Link>
                                         </div>
                                     </td>
                                 </tr>
