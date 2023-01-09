@@ -91,7 +91,7 @@ const AddBookForm = (props) => {
                             </option>
                             {
                                 categories.map((cat) => {
-                                    return <option value={cat.id}>{cat.name}</option>
+                                    return <option key={cat.id} value={cat.id}>{cat.name}</option>
                                 })
                             }
                         </select>
@@ -104,7 +104,7 @@ const AddBookForm = (props) => {
                 </div>
             </form>
         </div>
-    )
+    );
 };
 
 export default AddBookForm;

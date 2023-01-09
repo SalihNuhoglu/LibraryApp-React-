@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"
 import { Loading } from "./Loading";
+import Modal from "./Modal";
 
 const ListBooks = (props) => {
 
@@ -9,6 +10,8 @@ const ListBooks = (props) => {
     const [books, setBooks] = useState(null);
     const [categories, setCategories] = useState(null);
     const [didUpdate, setDidUpdate] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [bookToBeRemoved, setBookToBeRemoved] = useState(null);
 
     useEffect(() => {
         axios
@@ -68,7 +71,7 @@ const ListBooks = (props) => {
                             const category = categories.find(
                                 (cat) => cat.id === book.categoryId)
                             return (
-                                <tr>
+                                <tr key={book.id}>
                                     <td>{book.name}</td>
                                     <td>{book.author}</td>
                                     <td>{category.name}</td>
@@ -77,7 +80,10 @@ const ListBooks = (props) => {
                                         <div className="btn-group" role="group" >
                                             <button type="button"
                                                 className="btn btn-outline-danger btn-sm"
-                                                onClick={() => deleteBook(book.id)}>
+                                                onClick={() => {
+                                                    setShowModal(true);
+                                                    setBookToBeRemoved(book.id)
+                                                }}>
                                                 Delete
                                             </button>
                                             <Link to={`edit-book/${book.id}`} className="btn btn-sm btn-outline-secondary">Edit</Link>
@@ -90,9 +96,17 @@ const ListBooks = (props) => {
 
                 </tbody>
             </table>
+            {showModal === true && (
+                <Modal 
+                    explain="Are you sure to delete this item?"
+                    title={"Delete"}
+                    workToBeDone={() => deleteBook(bookToBeRemoved)}
+                    setShowModal={setShowModal}
+                />
+            )}
         </div>
 
-    )
-}
+    );
+};
 
 export default ListBooks;
