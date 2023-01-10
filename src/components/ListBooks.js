@@ -12,6 +12,7 @@ const ListBooks = (props) => {
     const [didUpdate, setDidUpdate] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bookToBeRemoved, setBookToBeRemoved] = useState(null);
+    const [deletedBookName,setDeletedBookName] = useState(null);
 
     useEffect(() => {
         axios
@@ -82,7 +83,8 @@ const ListBooks = (props) => {
                                                 className="btn btn-outline-danger btn-sm"
                                                 onClick={() => {
                                                     setShowModal(true);
-                                                    setBookToBeRemoved(book.id)
+                                                    setBookToBeRemoved(book.id);
+                                                    setDeletedBookName(book.name);
                                                 }}>
                                                 Delete
                                             </button>
@@ -98,10 +100,10 @@ const ListBooks = (props) => {
             </table>
             {showModal === true && (
                 <Modal 
-                    explain="Are you sure to delete this item?"
-                    title={"Delete"}
-                    workToBeDone={() => deleteBook(bookToBeRemoved)}
-                    setShowModal={setShowModal}
+                    explain= {` Are you sure to delete ${deletedBookName}?`}
+                    title={deletedBookName}
+                    onConfirm={() => deleteBook(bookToBeRemoved)}
+                    onCancel={()=> setShowModal(false)}
                 />
             )}
         </div>

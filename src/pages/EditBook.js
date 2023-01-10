@@ -3,18 +3,21 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { Loading } from "../components/Loading";
+import Modal from "../components/Modal";
 
 
 const EditBook = (props) => {
     const params = useParams();
     console.log("params", params);
     const navigate = useNavigate();
+   
 
     const [categories, setCategories] = useState(null);
     const [bookname, setBookname] = useState("");
     const [author, setAuthor] = useState("");
     const [isbn, setIsbn] = useState("");
     const [category, setCategory] = useState("");
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         axios
@@ -37,6 +40,11 @@ const EditBook = (props) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        setShowModal(true);
+
+    };
+
+    const editBook = () => {
         if (bookname === "" || author === "" || category === "") {
             alert("Book Name, Author and Category cannot be empty");
             return;
@@ -53,10 +61,11 @@ const EditBook = (props) => {
             .put(`http://localhost:3004/books/${params.bookId}`, updatedBook)
             .then((res) => {
                 console.log(res);
+                setShowModal(false);
                 navigate("/");
             })
             .catch((err) => console.log("edit error", err))
-    };
+    }
 
     if (categories === null) {
         return <Loading />;
@@ -110,7 +119,7 @@ const EditBook = (props) => {
                         </div>
                     </div>
                     <div className="d-flex justify-content-center">
-                        <button onClick={()=> navigate("/")} type="button" className="btn btn-outline-danger w-25 mx-2">
+                        <button onClick={() => navigate("/")} type="button" className="btn btn-outline-danger w-25 mx-2">
                             Cancel
                         </button>
                         <button type="submit" className="btn btn-primary w-25">
@@ -119,6 +128,16 @@ const EditBook = (props) => {
                     </div>
                 </form>
             </div>
+            {
+                showModal === true && (
+                    <Modal
+                        explain="Do you want to add this item?"
+                        title="Edit Book"
+                        onCancel={() => setShowModal(false)}
+                        onConfirm={() => editBook()}
+                    />
+                )
+            }
         </div>
     );
 };

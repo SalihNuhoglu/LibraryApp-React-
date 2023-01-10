@@ -2,7 +2,7 @@
   "books": [
     {
       "id": 1,
-      "name": "Yaban edit",
+      "name": "Yaban edit4",
       "author": "Yakup Kadri Karaosmanoğlu",
       "categoryId": "1",
       "isbn": "11111111111"
@@ -22,8 +22,8 @@
       "categoryId": "3"
     },
     {
-      "id": 1673300107707,
-      "name": "Sineklerin Tanrısı",
+      "id": 1673348981273,
+      "name": "God of Flies",
       "author": "William Golding",
       "isbn": "",
       "categoryId": "1"

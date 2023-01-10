@@ -1,21 +1,24 @@
-import React  from "react";
+import React from "react";
 
 const Modal = (props) => {
 
-    const {setShowModal, workToBeDone ,title , explain} = props;
+    const { onCancel, onConfirm, title, explain } = props;
 
     return (
-        <div style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            backgroundColor: "rgba(0,0,0,0.3",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-        }}>
+        <button
+            onClick={onCancel}
+            style={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100vw",
+                height: "100vh",
+                backgroundColor: "rgba(0,0,0,0.3",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                cursor:"default",
+            }}>
             <div style={{
                 width: "50%",
                 padding: "20px",
@@ -26,15 +29,15 @@ const Modal = (props) => {
                 <p className="text-center">{explain}</p>
                 <div className="d-flex justify-content-center">
                     <button
-                        onClick={() => setShowModal(false)}
+                        onClick={onCancel}
                         className="btn btn-sm btn-outline-danger mx-3"
                     >
                         Cancel
                     </button>
-                    <button onClick={(workToBeDone) }  className="btn btn-sm btn-outline-primary">Approve</button>
+                    <button onClick={onConfirm} className="btn btn-sm btn-outline-primary">Approve</button>
                 </div>
             </div>
-        </div>
+        </button>
     );
 };
 
