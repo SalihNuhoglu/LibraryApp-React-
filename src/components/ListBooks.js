@@ -3,9 +3,13 @@ import { Link } from "react-router-dom";
 import axios from "axios"
 import { Loading } from "./Loading";
 import Modal from "./Modal";
+import { useSelector } from "react-redux";
+
 
 const ListBooks = (props) => {
-
+     
+    const applicationGeneralState = useSelector((state) =>state)
+    console.log(applicationGeneralState);
 
     const [books, setBooks] = useState(null);
     const [categories, setCategories] = useState(null);
