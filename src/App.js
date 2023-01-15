@@ -1,4 +1,4 @@
-import React , {useEffect} from "react";
+import React, { useEffect } from "react";
 import Home from "./pages/Home"
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import AddBook from "./pages/AddBook";
@@ -9,9 +9,21 @@ import axios from "axios";
 function App() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-     dispatch({type:"FETCH_CATEGORIES_START"})
-  }, [])
+  useEffect(() => {
+    dispatch({ type: "FETCH_CATEGORIES_START" });
+    axios
+      .get("http://localhost:3004/categories")
+      .then(res => {
+        dispatch({ type: "FETCH_CATEGORIES_SUCCESS", payload: res.data });
+      })
+      .catch(err => {
+        dispatch({
+          type: "FETCH_CATEGORIES_FAIL",
+          payload: "An error happened when pulling categories!",
+        });
+      });
+  }, []);
+
   return (
     <BrowserRouter>
       <Routes>
