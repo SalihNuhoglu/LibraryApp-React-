@@ -2,10 +2,11 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Loading } from "./Loading";
-
+import { useSelector } from "react-redux";
 
 const AddBookForm = (props) => {
 
+    const { categoriesState } = useSelector((state) => state);
     const navigate = useNavigate();
     const [categories, setCategories] = useState(null);
     const [bookname, setBookname] = useState("");
@@ -49,7 +50,7 @@ const AddBookForm = (props) => {
             .catch(err => console.log(err));
     };
 
-    if (categories === null) {
+    if (categoriesState.success !== true) {
         return <Loading />;
     }
     return (
@@ -90,7 +91,7 @@ const AddBookForm = (props) => {
                                 Select a category
                             </option>
                             {
-                                categories.map((cat) => {
+                                categoriesState.categories.map((cat) => {
                                     return <option key={cat.id} value={cat.id}>{cat.name}</option>
                                 })
                             }

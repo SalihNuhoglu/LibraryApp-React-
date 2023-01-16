@@ -4,15 +4,17 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { Loading } from "../components/Loading";
 import Modal from "../components/Modal";
-
+import { useSelector } from "react-redux";
 
 const EditBook = (props) => {
+
+    const {categoriesState} = useSelector((state)=>state);
     const params = useParams();
     console.log("params", params);
     const navigate = useNavigate();
    
 
-    const [categories, setCategories] = useState(null);
+    // const [categories, setCategories] = useState(null);
     const [bookname, setBookname] = useState("");
     const [author, setAuthor] = useState("");
     const [isbn, setIsbn] = useState("");
@@ -28,12 +30,12 @@ const EditBook = (props) => {
                 setAuthor(res.data.author);
                 setIsbn(res.data.isbn);
                 setCategory(res.data.categoryId);
-                axios
-                    .get("http://localhost:3004/categories")
-                    .then((res) => {
-                        setCategories(res.data);
-                    })
-                    .catch((err) => console.log(err));
+                // axios
+                //     .get("http://localhost:3004/categories")
+                //     .then((res) => {
+                //         setCategories(res.data);
+                //     })
+                //     .catch((err) => console.log(err));
             })
             .catch((err) => console.log(err))
     }, []);
@@ -67,7 +69,7 @@ const EditBook = (props) => {
             .catch((err) => console.log("edit error", err))
     }
 
-    if (categories === null) {
+    if (categoriesState.success !== true) {
         return <Loading />;
     }
 
@@ -111,7 +113,7 @@ const EditBook = (props) => {
                                     Select a category
                                 </option>
                                 {
-                                    categories.map((cat) => {
+                                    categoriesState.categories.map((cat) => {
                                         return <option key={cat.id} value={cat.id}>{cat.name}</option>
                                     })
                                 }

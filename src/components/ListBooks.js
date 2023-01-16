@@ -7,16 +7,16 @@ import { useSelector } from "react-redux";
 
 
 const ListBooks = (props) => {
-     
-    const applicationGeneralState = useSelector((state) =>state)
-    console.log(applicationGeneralState);
+
+    const {categoriesState } = useSelector((state) => state)
+    console.log(categoriesState);
 
     const [books, setBooks] = useState(null);
-    const [categories, setCategories] = useState(null);
+    //const [categories, setCategories] = useState(null);
     const [didUpdate, setDidUpdate] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [bookToBeRemoved, setBookToBeRemoved] = useState(null);
-    const [deletedBookName,setDeletedBookName] = useState(null);
+    const [deletedBookName, setDeletedBookName] = useState(null);
 
     useEffect(() => {
         axios
@@ -24,14 +24,14 @@ const ListBooks = (props) => {
             .then(resBook => {
                 console.log(resBook);
                 setBooks(resBook.data);
-                axios.get("http://localhost:3004/categories")
-                    .then(resCat => {
-                        setTimeout(() => {
-                            setCategories(resCat.data);
-                        });
+                //axios.get("http://localhost:3004/categories")
+                //  .then(resCat => {
+                //    setTimeout(() => {
+                //      setCategories(resCat.data);
+                //});
 
-                    })
-                    .catch((err) => console.log("categories err", err));
+                //})
+                //.catch((err) => console.log("categories err", err));
             })
             .catch((err) => console.log("books err", err));
     }, [didUpdate]);
@@ -48,7 +48,7 @@ const ListBooks = (props) => {
     };
 
 
-    if (books === null || categories === null) {
+    if (books === null || categoriesState.success !== true) {
         return <Loading />;
     }
 
@@ -73,7 +73,7 @@ const ListBooks = (props) => {
                 <tbody>
                     {
                         books.map(book => {
-                            const category = categories.find(
+                            const category = categoriesState.categories.find(
                                 (cat) => cat.id === book.categoryId)
                             return (
                                 <tr key={book.id}>
@@ -103,11 +103,11 @@ const ListBooks = (props) => {
                 </tbody>
             </table>
             {showModal === true && (
-                <Modal 
-                    explain= {` Are you sure to delete ${deletedBookName}?`}
+                <Modal
+                    explain={` Are you sure to delete ${deletedBookName}?`}
                     title={deletedBookName}
                     onConfirm={() => deleteBook(bookToBeRemoved)}
-                    onCancel={()=> setShowModal(false)}
+                    onCancel={() => setShowModal(false)}
                 />
             )}
         </div>
