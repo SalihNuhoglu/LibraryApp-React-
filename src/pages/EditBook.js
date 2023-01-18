@@ -4,15 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import Header from "../components/Header";
 import { Loading } from "../components/Loading";
 import Modal from "../components/Modal";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const EditBook = (props) => {
 
-    const {categoriesState} = useSelector((state)=>state);
+    const dispatch = useDispatch();
+    const { categoriesState, booksState } = useSelector((state) => state);
     const params = useParams();
     console.log("params", params);
     const navigate = useNavigate();
-   
+
 
     // const [categories, setCategories] = useState(null);
     const [bookname, setBookname] = useState("");
@@ -22,22 +23,33 @@ const EditBook = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:3004/books/${params.bookId}`)
-            .then((res) => {
-                console.log(res.data);
-                setBookname(res.data.name);
-                setAuthor(res.data.author);
-                setIsbn(res.data.isbn);
-                setCategory(res.data.categoryId);
-                // axios
-                //     .get("http://localhost:3004/categories")
-                //     .then((res) => {
-                //         setCategories(res.data);
-                //     })
-                //     .catch((err) => console.log(err));
-            })
-            .catch((err) => console.log(err))
+        const searchedBook = booksState.books.find(
+            (item) => item.id == params.bookId
+        );
+        if (searchedBook === undefined) {
+          navigate("/");
+          return;
+        }
+        setBookname(searchedBook.name);
+        setAuthor(searchedBook.author);
+        setIsbn(searchedBook.isbn);
+        setCategory(searchedBook.categoryId);
+        // axios
+        //     .get(`http://localhost:3004/books/${params.bookId}`)
+        //     .then((res) => {
+        //         console.log(res.data);
+        //         setBookname(res.data.name);
+        //         setAuthor(res.data.author);
+        //         setIsbn(res.data.isbn);
+        //         setCategory(res.data.categoryId);
+        //         // axios
+        //         //     .get("http://localhost:3004/categories")
+        //         //     .then((res) => {
+        //         //         setCategories(res.data);
+        //         //     })
+        //         //     .catch((err) => console.log(err));
+        //     })
+        //     .catch((err) => console.log(err))
     }, []);
 
     const handleSubmit = (event) => {
@@ -52,7 +64,7 @@ const EditBook = (props) => {
             return;
         }
         const updatedBook = {
-            id: params.bookId,
+            id:Number(params.bookId),
             name: bookname,
             author: author,
             categoryId: category,
@@ -63,13 +75,14 @@ const EditBook = (props) => {
             .put(`http://localhost:3004/books/${params.bookId}`, updatedBook)
             .then((res) => {
                 console.log(res);
+                dispatch({ type: "EDIT_BOOK", payload: updatedBook })
                 setShowModal(false);
                 navigate("/");
             })
             .catch((err) => console.log("edit error", err))
     }
 
-    if (categoriesState.success !== true) {
+    if (categoriesState.success !== true || booksState.success !== true) {
         return <Loading />;
     }
 

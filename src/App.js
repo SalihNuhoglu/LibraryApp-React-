@@ -10,6 +10,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    //categories
     dispatch({ type: "FETCH_CATEGORIES_START" });
     axios
       .get("http://localhost:3004/categories")
@@ -22,6 +23,22 @@ function App() {
           payload: "An error happened when pulling categories!",
         });
       });
+    //books
+    dispatch({
+      type: "FETCH_BOOKS_START"
+    });
+    axios.get("http://localhost:3004/books")
+      .then(res => {
+        dispatch({ type: "FETCH_BOOKS_SUCCESS", payload: res.data });
+
+      })
+      .catch(err => {
+        dispatch({
+          type: "FETCH_BOOKS_FAIL",
+          payload: "An error happened when pulling categories!",
+        });
+      });
+
   }, []);
 
   return (

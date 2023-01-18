@@ -2,7 +2,7 @@
   "books": [
     {
       "id": 1,
-      "name": "Yaban edit4",
+      "name": "Yaban edit3",
       "author": "Yakup Kadri Karaosmanoğlu",
       "categoryId": "1",
       "isbn": "11111111111"
@@ -25,6 +25,13 @@
       "id": 1673348981273,
       "name": "God of Flies",
       "author": "William Golding",
+      "categoryId": "1",
+      "isbn": ""
+    },
+    {
+      "id": 1674044555526,
+      "name": "aloo123",
+      "author": "asda",
       "categoryId": "1",
       "isbn": ""
     }
