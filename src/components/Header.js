@@ -13,6 +13,16 @@ const Header = (props) => {
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li>
+                            <Link className="navbar-brand" to="/">
+                                Books
+                            </Link>
+                        </li>
+                        <li>
+                            <Link className="navbar-brand" to="/categories">
+                                Categories
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </div>

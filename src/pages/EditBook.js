@@ -23,12 +23,17 @@ const EditBook = (props) => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
+
+
+        
+
+
         const searchedBook = booksState.books.find(
             (item) => item.id == params.bookId
         );
         if (searchedBook === undefined) {
-          navigate("/");
-          return;
+            navigate("/");
+            return;
         }
         setBookname(searchedBook.name);
         setAuthor(searchedBook.author);
@@ -50,6 +55,7 @@ const EditBook = (props) => {
         //         //     .catch((err) => console.log(err));
         //     })
         //     .catch((err) => console.log(err))
+        document.title = `Library - Edit Book - ${searchedBook.name}`;
     }, []);
 
     const handleSubmit = (event) => {
@@ -64,7 +70,7 @@ const EditBook = (props) => {
             return;
         }
         const updatedBook = {
-            id:Number(params.bookId),
+            id: Number(params.bookId),
             name: bookname,
             author: author,
             categoryId: category,
