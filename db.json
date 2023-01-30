@@ -29,25 +29,29 @@
       "isbn": ""
     },
     {
-      "id": 1674044555526,
-      "name": "aloo123",
-      "author": "asda",
-      "categoryId": "1",
-      "isbn": ""
+      "id": 1675104734655,
+      "name": "23123",
+      "author": "3123",
+      "isbn": "1232312",
+      "categoryId": "2"
     }
   ],
   "categories": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Novel"
     },
     {
-      "id": "2",
+      "id": 2,
       "name": "Story"
     },
     {
-      "id": "3",
+      "id": 3,
       "name": "Essay"
+    },
+    {
+      "name": "poem",
+      "id": 4
     }
   ]
 }
